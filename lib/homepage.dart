@@ -3,7 +3,7 @@ import 'package:mission_k3_web/Models/content_view.dart';
 import 'package:mission_k3_web/Models/tab_controller_handler.dart';
 import 'package:mission_k3_web/Models/view_wrapper.dart';
 import 'package:mission_k3_web/views/upload_view.dart';
-import 'package:mission_k3_web/views/member_view.dart';
+import 'package:mission_k3_web/views/home_view.dart';
 // import 'package:mission_k3_web/widgets/bottom_bar.dart';
 import 'package:mission_k3_web/widgets/custom_tab.dart';
 import 'package:mission_k3_web/widgets/custom_tab_bar.dart';
@@ -28,12 +28,12 @@ class _HomePageState extends State<HomePage>
 
   List<ContentView> contentViews = [
     ContentView(
-      tab: CustomTab(title: 'Home'),
-      content: MemberView(),
+      tab: const CustomTab(title: 'Home'),
+      content: const HomeView(),
     ),
     ContentView(
-      tab: CustomTab(title: 'Upload'),
-      content: MemberView(),
+      tab: const CustomTab(title: 'Upload'),
+      content: const MemberView(),
     ),
   ];
 
@@ -55,84 +55,58 @@ class _HomePageState extends State<HomePage>
     print('Width: $screenWidth');
     print('Height: $screenHeight');
     return Scaffold(
-      backgroundColor: Color(0xff1e1e24),
+      backgroundColor: const Color(0xff1e1e24),
       key: scaffoldKey,
       endDrawer: drawer(),
-      body: Padding(
-        padding: EdgeInsets.only(top: topPadding, bottom: bottomPadding),
-        child:
-            ViewWrapper(desktopView: desktopView(), mobileView: mobileView()),
-      ),
-    );
-  }
-
-  Widget desktopView() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        /// Tab Bar
-        SizedBox(
-          height: screenHeight * 0.05,
-          child: CustomTabBar(
-              controller: tabController,
-              tabs: contentViews.map((e) => e.tab).toList()),
-        ),
-
-        /// Tab Bar View
-        SizedBox(
-          height: screenHeight * 0.8,
-          child: TabControllerHandler(
-            tabController: tabController,
-            child: Center(
-              child: SizedBox(
-                width: screenWidth * 0.45,
-                child: TabBarView(
-                  controller: tabController,
-                  children: contentViews.map((e) => e.content).toList(),
+      body: Center(
+        child: Container(
+          width: screenWidth < 1000 ? screenWidth * 0.95 : screenWidth * 0.4,
+          child: Padding(
+            padding: EdgeInsets.only(top: topPadding, bottom: bottomPadding),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                /// Tab Bar
+                SizedBox(
+                  height: screenHeight * 0.05,
+                  width: screenWidth < 1000
+                      ? screenWidth * 0.95
+                      : screenWidth * 0.4,
+                  child: CustomTabBar(
+                      controller: tabController,
+                      tabs: contentViews.map((e) => e.tab).toList()),
                 ),
-              ),
+
+                /// Tab Bar View
+                SizedBox(
+                  height: screenHeight * 0.8,
+                  child: TabControllerHandler(
+                    tabController: tabController,
+                    child: Center(
+                      child: SizedBox(
+                        width: screenWidth * 0.90,
+                        child: TabBarView(
+                          controller: tabController,
+                          children: contentViews.map((e) => e.content).toList(),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                /// Bottom Bar
+                // BottomBar()
+              ],
             ),
           ),
-        ),
-
-        /// Bottom Bar
-        // BottomBar()
-      ],
-    );
-  }
-
-  Widget mobileView() {
-    return Padding(
-      padding: EdgeInsets.only(left: sidePadding, right: sidePadding),
-      child: Container(
-        width: screenWidth,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            IconButton(
-                iconSize: screenWidth * 0.08,
-                icon: Icon(Icons.menu_rounded),
-                color: Colors.white,
-                splashColor: Colors.transparent,
-                onPressed: () => scaffoldKey.currentState?.openEndDrawer()),
-            Expanded(
-              child: ScrollablePositionedList.builder(
-                scrollDirection: Axis.vertical,
-                itemScrollController: itemScrollController,
-                itemCount: contentViews.length,
-                itemBuilder: (context, index) => contentViews[index].content,
-              ),
-            )
-          ],
         ),
       ),
     );
   }
 
   Widget drawer() {
-    return Container(
+    return SizedBox(
       width: screenWidth * 0.5,
       child: Drawer(
         child: ListView(
@@ -147,7 +121,7 @@ class _HomePageState extends State<HomePage>
                           onTap: () {
                             itemScrollController.scrollTo(
                                 index: contentViews.indexOf(e),
-                                duration: Duration(milliseconds: 300));
+                                duration: const Duration(milliseconds: 300));
                             Navigator.pop(context);
                           },
                         ),

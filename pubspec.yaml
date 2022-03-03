@@ -36,12 +36,14 @@ dependencies:
   cupertino_icons: ^1.0.2
   font_awesome_flutter: ^9.0.0
   url_launcher: ^6.0.3
-  scrollable_positioned_list: ^0.1.10
+  scrollable_positioned_list: ^0.2.3
   hovering: ^1.0.4
   csv_picker_button: ^0.0.7
   firebase_core: ^1.11.0
   cloud_firestore: ^3.1.6
   google_fonts: ^2.3.1
+  firebase_storage: ^10.2.9
+  file_picker: ^3.0.4
 
 dev_dependencies:
   flutter_test:

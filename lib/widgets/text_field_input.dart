@@ -18,12 +18,14 @@ class TextFieldInput extends StatelessWidget {
     final inputBorder =
         OutlineInputBorder(borderSide: Divider.createBorderSide(context));
     return TextField(
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.black,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
       ),
       controller: textEditingController,
       decoration: InputDecoration(
-        fillColor: Colors.grey[500],
+        fillColor: Colors.white,
         hintText: hintText,
         focusColor: Colors.black,
         hintStyle: TextStyle(color: Colors.black),
