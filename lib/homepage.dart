@@ -1,7 +1,8 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:mission_k3_web/Models/content_view.dart';
 import 'package:mission_k3_web/Models/tab_controller_handler.dart';
-import 'package:mission_k3_web/Models/view_wrapper.dart';
 import 'package:mission_k3_web/views/upload_view.dart';
 import 'package:mission_k3_web/views/home_view.dart';
 // import 'package:mission_k3_web/widgets/bottom_bar.dart';
@@ -10,6 +11,8 @@ import 'package:mission_k3_web/widgets/custom_tab_bar.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -59,7 +62,7 @@ class _HomePageState extends State<HomePage>
       key: scaffoldKey,
       endDrawer: drawer(),
       body: Center(
-        child: Container(
+        child: SizedBox(
           width: screenWidth < 1000 ? screenWidth * 0.95 : screenWidth * 0.4,
           child: Padding(
             padding: EdgeInsets.only(top: topPadding, bottom: bottomPadding),

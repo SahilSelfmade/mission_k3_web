@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TabControllerHandler extends InheritedWidget {
   final TabController tabController;
 
-  TabControllerHandler({
+  const TabControllerHandler({
     Key? key,
     required this.tabController,
     required Widget child,

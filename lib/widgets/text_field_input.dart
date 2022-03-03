@@ -28,7 +28,7 @@ class TextFieldInput extends StatelessWidget {
         fillColor: Colors.white,
         hintText: hintText,
         focusColor: Colors.black,
-        hintStyle: TextStyle(color: Colors.black),
+        hintStyle: const TextStyle(color: Colors.black),
         border: inputBorder,
         focusedBorder: inputBorder,
         enabledBorder: inputBorder,

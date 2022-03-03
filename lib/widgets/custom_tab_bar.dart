@@ -26,7 +26,7 @@ class CustomTabBar extends StatelessWidget {
           child: TabBar(
             indicatorSize: TabBarIndicatorSize.tab,
             controller: controller,
-            indicatorColor: Color(0xff21a179),
+            indicatorColor: const Color(0xff21a179),
             tabs: tabs,
           ),
         ),

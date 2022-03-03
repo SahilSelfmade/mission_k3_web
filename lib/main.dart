@@ -1,18 +1,50 @@
+// ignore_for_file: must_be_immutable
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'homepage.dart';
+import 'views/login_view.dart';
 
-void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: "AIzaSyAP-5Tbc4CxouX6FPjCEuTSrz-y1mwk0s8",
+        appId: "1:735665091280:web:4ae1830ca3a7cdeecf24d5",
+        projectId: "mission-k3-4f577",
+        storageBucket: "mission-k3-4f577.appspot.com",
+        messagingSenderId: "735665091280",
+      ),
+    );
+  } else {
+    await Firebase.initializeApp();
+  }
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  User? firebaseUser = FirebaseAuth.instance.currentUser;
+  // Define a widget
+  late Widget firstWidget;
+
+  MyApp({Key? key}) : super(key: key);
+
+// Assign widget based on availability of currentUser
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    if (firebaseUser != null) {
+      firstWidget = const HomePage();
+    } else {
+      firstWidget = const LoginScreen();
+    }
+    return GetMaterialApp(
       title: 'Mission K3',
       debugShowCheckedModeBanner: true,
       theme: ThemeData(
@@ -32,14 +64,17 @@ class MyApp extends StatelessWidget {
                   fontFamily: 'DMSerifDisplay'),
               subtitle1: TextStyle(fontSize: 30, color: Colors.grey[500]),
               subtitle2: TextStyle(fontSize: 20, color: Colors.grey[500]),
-              bodyText1:
-                  const TextStyle(fontSize: 20, color: Colors.white, height: 1.25),
-              bodyText2:
-                  const TextStyle(fontSize: 17, color: Colors.white, height: 1.25),
-              caption:
-                  const TextStyle(fontSize: 15, color: Colors.white, height: 1.25),
+              bodyText1: const TextStyle(
+                  fontSize: 20, color: Colors.white, height: 1.25),
+              bodyText2: const TextStyle(
+                  fontSize: 17, color: Colors.white, height: 1.25),
+              caption: const TextStyle(
+                  fontSize: 15, color: Colors.white, height: 1.25),
               button: const TextStyle(fontSize: 17, color: Color(0xff1e1e24)))),
-      home: HomePage(),
+      initialRoute: '/',
+      getPages: [
+        GetPage(name: '/', page: () => firstWidget),
+      ],
     );
   }
 }

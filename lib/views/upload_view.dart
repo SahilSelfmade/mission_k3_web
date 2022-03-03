@@ -1,10 +1,13 @@
-import 'package:csv_picker_button/csv_picker_button.dart';
+// ignore_for_file: avoid_print
+
+import 'dart:typed_data';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mission_k3_web/Models/theme_selector.dart';
-import 'package:mission_k3_web/Models/view_wrapper.dart';
 import '../widgets/text_field_input.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 List<DropdownMenuItem<String>> get postCategoryItems {
   List<DropdownMenuItem<String>> menuItems = [
@@ -38,9 +41,6 @@ class _MemberViewState extends State<MemberView> {
   String selectedValue = "audio";
 
   final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _postCategoryController = TextEditingController();
-  final TextEditingController _postTypeController = TextEditingController();
-  final TextEditingController _thumbnailController = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
 
   double getFontSize(bool isHeader) {
@@ -209,19 +209,21 @@ class _MemberViewState extends State<MemberView> {
 
                 if (result != null) {
                   PlatformFile file = result.files.first;
+                 
 
                   print(file.name);
                   // print(file.bytes);
                   print(file.size);
                   print(file.extension);
                   print(file.path);
+                  print(file.readStream);
                 } else {
                   // User canceled the picker
                 }
               },
               child: Text(
                 'Select File'.toUpperCase(),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -234,9 +236,9 @@ class _MemberViewState extends State<MemberView> {
             MaterialButton(
               minWidth: screenWidth,
               padding: const EdgeInsets.symmetric(vertical: 20),
-              color: Color(0xff21a179),
+              color: const Color(0xff21a179),
               onPressed: () {},
-              child: Text(
+              child: const Text(
                 "PRESS TO UPLOAD FILE",
                 style: TextStyle(
                   color: Colors.white,
