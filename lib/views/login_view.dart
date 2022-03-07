@@ -14,7 +14,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
-  bool _isLoading = false;
   final TextEditingController _passwordController = TextEditingController();
 
   @override
@@ -26,13 +25,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void loginUser() async {
     setState(() {
-      _isLoading = true;
     });
     String res = await AuthMethods().loginUser(
         email: _emailController.text, password: _passwordController.text);
     if (res == 'success') {
       setState(() {
-        _isLoading = false;
         Get.snackbar(
           'Login Successful',
           'Click on Home Tab to Add a Post',
@@ -45,11 +42,10 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: Colors.white,
         );
       });
-      Get.offAll(HomePage());
+      Get.offAll(const HomePage());
     } else if (_emailController.text.isEmpty ||
         _passwordController.text.isEmpty) {
       setState(() {
-        _isLoading = false;
       });
       Get.snackbar(
         'Login Failed',
@@ -64,7 +60,6 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     } else if (_passwordController.text.length < 6) {
       setState(() {
-        _isLoading = false;
       });
       Get.snackbar(
         'Login Failed',
@@ -79,7 +74,6 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     } else if (_emailController.text.isEmail != true) {
       setState(() {
-        _isLoading = false;
       });
       Get.snackbar(
         'Login Failed',
@@ -94,7 +88,6 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     } else {
       setState(() {
-        _isLoading = false;
       });
       Get.snackbar(
         'Login Failed',

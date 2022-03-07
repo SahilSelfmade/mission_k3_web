@@ -71,9 +71,16 @@ class MyApp extends StatelessWidget {
               caption: const TextStyle(
                   fontSize: 15, color: Colors.white, height: 1.25),
               button: const TextStyle(fontSize: 17, color: Color(0xff1e1e24)))),
-      initialRoute: '/',
+      initialRoute: '/home',
       getPages: [
-        GetPage(name: '/', page: () => firstWidget),
+        GetPage(
+          name: '/',
+          page: () => firstWidget,
+        ),
+        GetPage(
+          name: '/home',
+          page: () => const HomePage(),
+        ),
       ],
     );
   }

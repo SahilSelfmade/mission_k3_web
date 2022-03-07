@@ -1,10 +1,10 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
 import 'package:mission_k3_web/Models/content_view.dart';
 import 'package:mission_k3_web/Models/tab_controller_handler.dart';
-import 'package:mission_k3_web/views/upload_view.dart';
-import 'package:mission_k3_web/views/home_view.dart';
+import 'package:mission_k3_web/views/audio_upload.dart';
+import 'package:mission_k3_web/views/home_upload.dart';
 // import 'package:mission_k3_web/widgets/bottom_bar.dart';
 import 'package:mission_k3_web/widgets/custom_tab.dart';
 import 'package:mission_k3_web/widgets/custom_tab_bar.dart';
@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage>
   List<ContentView> contentViews = [
     ContentView(
       tab: const CustomTab(title: 'Home'),
-      content: const HomeView(),
+      content: const HomePageView(),
     ),
     ContentView(
       tab: const CustomTab(title: 'Upload'),

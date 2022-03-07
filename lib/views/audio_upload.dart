@@ -1,26 +1,14 @@
-// ignore_for_file: avoid_print
-
-import 'dart:typed_data';
+// ignore_for_file: avoid_print, prefer_typing_uninitialized_variables
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mission_k3_web/Models/theme_selector.dart';
 import '../widgets/text_field_input.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-
-List<DropdownMenuItem<String>> get postCategoryItems {
-  List<DropdownMenuItem<String>> menuItems = [
-    const DropdownMenuItem(child: const Text("Audio"), value: "audio"),
-    const DropdownMenuItem(child: Text("Video"), value: "video"),
-    const DropdownMenuItem(child: Text("Image"), value: "image"),
-  ];
-  return menuItems;
-}
 
 List<DropdownMenuItem<String>> get postTypeItems {
   List<DropdownMenuItem<String>> menuItems = [
-    const DropdownMenuItem(child: const Text("Free"), value: "free"),
+    const DropdownMenuItem(child: Text("Free"), value: "free"),
     const DropdownMenuItem(child: Text("Paid"), value: "paid"),
   ];
   return menuItems;
@@ -38,26 +26,36 @@ class _MemberViewState extends State<MemberView> {
   late double screenHeight;
   late double screenWidth;
   String selectedPostTypeValue = "free";
-  String selectedValue = "audio";
 
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
 
-  double getFontSize(bool isHeader) {
-    double fontSize = screenWidth > 950 && screenHeight > 550 ? 30 : 25;
-    return isHeader ? fontSize * 2.25 : fontSize;
-  }
-
-  Widget header(double fontSize) {
+  Widget header() {
     return RichText(
       text: TextSpan(
         // Note: Styles for TextSpans must be explicitly defined.
         // Child text spans will inherit styles from parent
         style: ThemeSelector.selectHeadline(context),
+
         children: const <TextSpan>[
-          TextSpan(text: 'Post '),
-          TextSpan(text: 'Upload', style: TextStyle(color: Color(0xff21a179))),
-          TextSpan(text: '!'),
+          TextSpan(
+            text: 'Audio ',
+            style: TextStyle(
+              fontSize: 34,
+            ),
+          ),
+          TextSpan(
+              text: 'Upload',
+              style: TextStyle(
+                color: Color(0xff21a179),
+                fontSize: 34,
+              )),
+          TextSpan(
+            text: '!',
+            style: TextStyle(
+              fontSize: 34,
+            ),
+          ),
         ],
       ),
     );
@@ -75,7 +73,7 @@ class _MemberViewState extends State<MemberView> {
             const SizedBox(
               height: 34,
             ),
-            header(getFontSize(true)),
+            header(),
             const SizedBox(
               height: 24,
             ),
@@ -162,41 +160,6 @@ class _MemberViewState extends State<MemberView> {
                 borderRadius: BorderRadius.circular(5),
                 color: Colors.white,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Post Type',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: DropdownButton(
-                      style: const TextStyle(
-                        color: Colors.black,
-                      ),
-                      isExpanded: true,
-                      value: selectedValue,
-                      items: postCategoryItems,
-                      dropdownColor: Colors.grey[100],
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedValue = newValue!;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 24,
             ),
             MaterialButton(
               minWidth: screenWidth,
@@ -209,7 +172,6 @@ class _MemberViewState extends State<MemberView> {
 
                 if (result != null) {
                   PlatformFile file = result.files.first;
-                 
 
                   print(file.name);
                   // print(file.bytes);
@@ -239,7 +201,7 @@ class _MemberViewState extends State<MemberView> {
               color: const Color(0xff21a179),
               onPressed: () {},
               child: const Text(
-                "PRESS TO UPLOAD FILE",
+                "PRESS TO UPLOAD AUDIO",
                 style: TextStyle(
                   color: Colors.white,
                 ),
