@@ -3,12 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:mission_k3_web/Models/content_view.dart';
 import 'package:mission_k3_web/Models/tab_controller_handler.dart';
+import 'package:mission_k3_web/posts/post_main.dart';
 import 'package:mission_k3_web/views/audio_upload.dart';
 import 'package:mission_k3_web/views/home_upload.dart';
 // import 'package:mission_k3_web/widgets/bottom_bar.dart';
 import 'package:mission_k3_web/widgets/custom_tab.dart';
 import 'package:mission_k3_web/widgets/custom_tab_bar.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+
+import 'users/user_main.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -38,6 +41,14 @@ class _HomePageState extends State<HomePage>
       tab: const CustomTab(title: 'Upload'),
       content: const MemberView(),
     ),
+    ContentView(
+      tab: const CustomTab(title: 'Users'),
+      content: const UserDetails(),
+    ),
+    ContentView(
+      tab: const CustomTab(title: 'Posts'),
+      content: const PostDetails(),
+    ),
   ];
 
   @override
@@ -51,19 +62,19 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
-    topPadding = screenHeight * 0.05;
+    topPadding = screenHeight * 0.07;
     bottomPadding = screenHeight * 0.03;
     sidePadding = screenWidth * 0.05;
 
     print('Width: $screenWidth');
     print('Height: $screenHeight');
     return Scaffold(
-      backgroundColor: const Color(0xff1e1e24),
+      backgroundColor: Colors.black,
       key: scaffoldKey,
       endDrawer: drawer(),
       body: Center(
         child: SizedBox(
-          width: screenWidth < 1000 ? screenWidth * 0.95 : screenWidth * 0.4,
+          // width: screenWidth < 1000 ? screenWidth * 0.95 : screenWidth * 0.4,
           child: Padding(
             padding: EdgeInsets.only(top: topPadding, bottom: bottomPadding),
             child: Column(
@@ -88,7 +99,9 @@ class _HomePageState extends State<HomePage>
                     tabController: tabController,
                     child: Center(
                       child: SizedBox(
-                        width: screenWidth * 0.90,
+                        width: screenWidth < 1000
+                            ? screenWidth * 0.95
+                            : screenWidth * 0.4,
                         child: TabBarView(
                           controller: tabController,
                           children: contentViews.map((e) => e.content).toList(),
@@ -97,9 +110,6 @@ class _HomePageState extends State<HomePage>
                     ),
                   ),
                 ),
-
-                /// Bottom Bar
-                // BottomBar()
               ],
             ),
           ),
@@ -110,7 +120,7 @@ class _HomePageState extends State<HomePage>
 
   Widget drawer() {
     return SizedBox(
-      width: screenWidth * 0.5,
+      // width: screenWidth * 0.5,
       child: Drawer(
         child: ListView(
           children: [Container(height: screenHeight * 0.1)] +

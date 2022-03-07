@@ -65,13 +65,22 @@ class MyApp extends StatelessWidget {
               subtitle1: TextStyle(fontSize: 30, color: Colors.grey[500]),
               subtitle2: TextStyle(fontSize: 20, color: Colors.grey[500]),
               bodyText1: const TextStyle(
-                  fontSize: 20, color: Colors.white, height: 1.25),
+                fontSize: 20,
+                color: Colors.white,
+                height: 1.25,
+              ),
               bodyText2: const TextStyle(
-                  fontSize: 17, color: Colors.white, height: 1.25),
+                fontSize: 17,
+                color: Colors.white,
+                height: 1.25,
+              ),
               caption: const TextStyle(
-                  fontSize: 15, color: Colors.white, height: 1.25),
+                fontSize: 15,
+                color: Colors.white,
+                height: 1.25,
+              ),
               button: const TextStyle(fontSize: 17, color: Color(0xff1e1e24)))),
-      initialRoute: '/home',
+      initialRoute: '/',
       getPages: [
         GetPage(
           name: '/',

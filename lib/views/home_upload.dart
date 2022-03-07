@@ -49,7 +49,7 @@ class _HomePageViewState extends State<HomePageView> {
 
         children: const <TextSpan>[
           TextSpan(
-            text: 'Homepage ',
+            text: 'Post ',
             style: TextStyle(
               fontSize: 34,
             ),
