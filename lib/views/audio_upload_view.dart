@@ -14,14 +14,14 @@ List<DropdownMenuItem<String>> get postTypeItems {
   return menuItems;
 }
 
-class MemberView extends StatefulWidget {
-  const MemberView({Key? key}) : super(key: key);
+class AudioUploadView extends StatefulWidget {
+  const AudioUploadView({Key? key}) : super(key: key);
 
   @override
-  _MemberViewState createState() => _MemberViewState();
+  _AudioUploadViewState createState() => _AudioUploadViewState();
 }
 
-class _MemberViewState extends State<MemberView> {
+class _AudioUploadViewState extends State<AudioUploadView> {
   late var dataShow;
   late double screenHeight;
   late double screenWidth;
@@ -41,6 +41,7 @@ class _MemberViewState extends State<MemberView> {
           TextSpan(
             text: 'Audio ',
             style: TextStyle(
+              color: Colors.black,
               fontSize: 34,
             ),
           ),
@@ -53,6 +54,7 @@ class _MemberViewState extends State<MemberView> {
           TextSpan(
             text: '!',
             style: TextStyle(
+              color: Colors.black,
               fontSize: 34,
             ),
           ),
@@ -67,7 +69,10 @@ class _MemberViewState extends State<MemberView> {
     screenWidth = MediaQuery.of(context).size.width;
 
     return SingleChildScrollView(
-      child: SizedBox(
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 20,
+        ),
         child: Column(
           children: [
             const SizedBox(
@@ -82,6 +87,7 @@ class _MemberViewState extends State<MemberView> {
                 'Add Basic Description',
                 style: GoogleFonts.oswald(
                   textStyle: const TextStyle(
+                    color: Colors.black,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),

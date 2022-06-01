@@ -55,9 +55,11 @@ class _UserDetailsState extends State<UserDetails> {
     filedName,
   ) {
     return ListTile(
-      title: Text(
-        userDetails[i][filedName].toString(),
-        style: const TextStyle(fontSize: 14, color: Colors.black),
+      title: Center(
+        child: Text(
+          userDetails[i][filedName].toString(),
+          style: const TextStyle(fontSize: 14, color: Colors.black),
+        ),
       ),
       tileColor: Colors.grey[100],
     );
@@ -74,7 +76,7 @@ class _UserDetailsState extends State<UserDetails> {
           fontWeight: FontWeight.bold,
         ),
       ),
-      tileColor: Colors.black,
+      tileColor: Color(0xff21a179),
     );
   }
 
@@ -101,7 +103,7 @@ class _UserDetailsState extends State<UserDetails> {
         }).toList();
 
         return Scaffold(
-          backgroundColor: Colors.black,
+          // backgroundColor: Colors.black,
           body: Container(
             child: Scrollbar(
               scrollbarOrientation: ScrollbarOrientation.bottom,
@@ -114,17 +116,17 @@ class _UserDetailsState extends State<UserDetails> {
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Table(
+                        defaultColumnWidth: FixedColumnWidth(200.0),
                         border: TableBorder.all(
-                          color: Colors.grey,
+                          color: Colors.black,
                           style: BorderStyle.solid,
                           width: 2,
                         ),
-                        defaultColumnWidth: const IntrinsicColumnWidth(),
+                        // defaultColumnWidth: const IntrinsicColumnWidth(flex: 2),
+
                         // columnWidths: const <int, TableColumnWidth>{
                         //   2: FixedColumnWidth(100),
-
                         // },
-
                         children: [
                           TableRow(
                             children: [
@@ -145,7 +147,7 @@ class _UserDetailsState extends State<UserDetails> {
                                         child: IconButton(
                                           icon: const Icon(
                                             Icons.remove_red_eye,
-                                            color: Colors.white,
+                                            color: Colors.black,
                                           ),
                                           onPressed: () {
                                             Get.to(
@@ -160,7 +162,7 @@ class _UserDetailsState extends State<UserDetails> {
                                         child: IconButton(
                                           icon: const Icon(
                                             Icons.edit,
-                                            color: Colors.white,
+                                            color: Colors.black,
                                           ),
                                           onPressed: () {
                                             Get.to(
@@ -175,7 +177,7 @@ class _UserDetailsState extends State<UserDetails> {
                                         child: IconButton(
                                           icon: const Icon(
                                             Icons.delete,
-                                            color: Colors.white,
+                                            color: Colors.black,
                                           ),
                                           onPressed: () {
                                             deleteUser(userDetails[i]['id']);

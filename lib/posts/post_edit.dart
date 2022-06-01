@@ -3,49 +3,42 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mission_k3_web/homepage.dart';
+import 'package:mission_k3_web/main.dart';
 
 import '../../widgets/text_field_input.dart';
 import '../homepages copy.dart';
 
-class UserDetailsEditPage extends StatefulWidget {
-  const UserDetailsEditPage({Key? key, required this.id}) : super(key: key);
+class PostDetailsEditPage extends StatefulWidget {
+  const PostDetailsEditPage({Key? key, this.id}) : super(key: key);
 
-  final String id;
+  final String? id;
 
   @override
-  State<UserDetailsEditPage> createState() => _UserDetailsEditPageState();
+  State<PostDetailsEditPage> createState() => _PostDetailsEditPageState();
 }
 
-class _UserDetailsEditPageState extends State<UserDetailsEditPage> {
+class _PostDetailsEditPageState extends State<PostDetailsEditPage> {
   bool isLoading = false;
-  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  CollectionReference posts =
+      FirebaseFirestore.instance.collection('home_posts');
 
-  final TextEditingController _firstName = TextEditingController();
-  final TextEditingController _lastName = TextEditingController();
-  final TextEditingController _phoneNumber = TextEditingController();
+  final TextEditingController _description = TextEditingController();
+  final TextEditingController _postType = TextEditingController();
+  final TextEditingController _shares = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _referralCode = TextEditingController();
-  final TextEditingController _referredBy = TextEditingController();
-  final TextEditingController _profileImg = TextEditingController();
 
   Future<void> updateUser(
     id,
-    firstName,
-    lastName,
-    phoneNumber,
-    profileImg,
-    referralCode,
-    referredBy,
-  ) {
-    return users
+    description,
+    postType,
+    shares,
+  ) async {
+    posts
         .doc(id)
         .update({
-          'first_name': firstName,
-          'last_name': lastName,
-          'phone_number': phoneNumber,
-          'referralCode': referralCode,
-          'referred_by': referredBy,
-          'profile_img': referredBy,
+          'description': description,
+          'post_type': postType,
+          'shares': shares,
         })
         .then(
           (value) => print("User Updated"),
@@ -69,10 +62,10 @@ class _UserDetailsEditPageState extends State<UserDetailsEditPage> {
       body: Center(
         child: Container(
             color: Colors.white,
-            width: screenW < 1000 ? screenW * 0.95 : screenW * 0.4,
+            // width: screenW < 1000 ? screenW * 0.95 : screenW * 0.4,
             child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
               future: FirebaseFirestore.instance
-                  .collection('users')
+                  .collection('home_posts')
                   .doc(widget.id)
                   .get(),
               builder: (_, snapshot) {
@@ -85,19 +78,13 @@ class _UserDetailsEditPageState extends State<UserDetailsEditPage> {
                   );
                 }
                 var data = snapshot.data!.data();
-                var firstName = data!['first_name'];
-                var lastName = data['last_name'];
-                var profileImg = data['profile_img'];
-                var phoneNumber = data['phone_number'];
-                var referralCode = data['referralCode'];
-                var referredBy = data['referred_by'];
+                var description = data!['description'];
+                var postType = data['post_type'];
+                var shares = data['shares'];
 
-                _profileImg.text = profileImg.toString();
-                _firstName.text = firstName.toString();
-                _lastName.text = lastName.toString();
-                _phoneNumber.text = phoneNumber.toString();
-                _referralCode.text = referralCode.toString();
-                _referredBy.text = referredBy.toString();
+                _description.text = description.toString();
+                _postType.text = postType.toString();
+                _shares.text = shares.toString();
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(
@@ -112,7 +99,7 @@ class _UserDetailsEditPageState extends State<UserDetailsEditPage> {
                         ),
                         Center(
                           child: Text(
-                            'Edit User Details',
+                            'Edit Post Details',
                             style: GoogleFonts.oswald(
                               textStyle: const TextStyle(
                                 fontSize: 30,
@@ -126,53 +113,33 @@ class _UserDetailsEditPageState extends State<UserDetailsEditPage> {
                           height: 48,
                         ),
                         TextFieldInput(
-                          textEditingController: _firstName,
-                          labelText: 'First Name',
+                          textEditingController: _description,
+                          labelText: 'Description',
                           textInputType: TextInputType.text,
-                          onChanged: (value) => firstName = value,
+                          onChanged: (value) => description = value,
                         ),
                         const SizedBox(
                           height: 24,
                         ),
                         TextFieldInput(
-                          textEditingController: _lastName,
-                          labelText: 'Last Name',
+                          labelText: 'Post Type',
+                          // enabled: false,
+                          textEditingController: _postType,
+                          textInputType: TextInputType.text,
+                          onChanged: (value) => postType = value,
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        TextFieldInput(
+                          textEditingController: _shares,
+                          labelText: 'Shares',
                           // hintText: 'Hello',
                           textInputType: TextInputType.text,
-                          onChanged: (value) => lastName = value,
+                          onChanged: (value) => shares = value,
                         ),
                         const SizedBox(
                           height: 24,
-                        ),
-                        TextFieldInput(
-                          labelText: 'Phone',
-                          enabled: false,
-                          textEditingController: _phoneNumber,
-                          textInputType: TextInputType.text,
-                          onChanged: (value) => phoneNumber = value,
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        TextFieldInput(
-                          labelText: 'Referral Code',
-                          enabled: false,
-                          textEditingController: _referralCode,
-                          textInputType: TextInputType.text,
-                          onChanged: (value) => referralCode = value,
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
-                        TextFieldInput(
-                          labelText: 'Referred By',
-                          enabled: false,
-                          textEditingController: _referredBy,
-                          textInputType: TextInputType.text,
-                          onChanged: (value) => referredBy = value,
-                        ),
-                        const SizedBox(
-                          height: 16,
                         ),
                         InkWell(
                           onTap: () async {
@@ -181,19 +148,16 @@ class _UserDetailsEditPageState extends State<UserDetailsEditPage> {
                                 isLoading = true;
                                 updateUser(
                                   widget.id,
-                                  firstName,
-                                  lastName,
-                                  phoneNumber,
-                                  referralCode,
-                                  referredBy,
-                                  profileImg,
+                                  description,
+                                  shares,
+                                  postType,
                                 );
                               });
                               // print(updateUser);
-                              Get.off;
+                              Get.back;
                               Get.snackbar(
                                 'Success',
-                                'User Updated Successfully.',
+                                'Post Updated Successfully.',
                                 isDismissible: true,
                                 maxWidth:
                                     MediaQuery.of(context).size.width * 0.5,
@@ -238,7 +202,7 @@ class _UserDetailsEditPageState extends State<UserDetailsEditPage> {
                                 isLoading = true;
                               });
 
-                              Get.off(const HomePageView());
+                              Get.off(MyApp());
                             }
                           },
                           child: Container(

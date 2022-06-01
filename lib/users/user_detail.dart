@@ -2,9 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mission_k3_web/homepage.dart';
 
 import '../../widgets/text_field_input.dart';
-import '../homepage.dart';
+import '../homepages copy.dart';
 
 class UserDetailsPage extends StatefulWidget {
   const UserDetailsPage({
@@ -154,7 +155,7 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
                               });
 
                               Get.off(
-                                const HomePage(),
+                                const HomePageView(),
                               );
                             }
                           },

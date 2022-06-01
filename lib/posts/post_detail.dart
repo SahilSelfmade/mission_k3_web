@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mission_k3_web/homepage.dart';
 
 import '../../widgets/text_field_input.dart';
-import '../homepage.dart';
 
 class PostDetailsPage extends StatefulWidget {
   const PostDetailsPage({
@@ -94,8 +94,9 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                         TextFieldInput(
                           textEditingController: _description,
                           enabled: false,
-                          labelText: 'First Name',
+                          labelText: 'Description',
                           textInputType: TextInputType.text,
+                          onChanged: (value) => description = value,
                         ),
                         const SizedBox(
                           height: 24,
@@ -103,17 +104,19 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                         TextFieldInput(
                           textEditingController: _postType,
                           enabled: false,
-                          labelText: 'Last Name',
+                          labelText: 'Post Type',
                           textInputType: TextInputType.text,
+                          onChanged: (value) => postType = value,
                         ),
                         const SizedBox(
                           height: 24,
                         ),
                         TextFieldInput(
                           enabled: false,
-                          labelText: 'Phone',
+                          labelText: 'Shares',
                           textEditingController: _shares,
                           textInputType: TextInputType.text,
+                          onChanged: (value) => shares = value,
                         ),
                         const SizedBox(
                           height: 24,
@@ -126,7 +129,7 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                               });
 
                               Get.off(
-                                const HomePage(),
+                                const HomePageView(),
                               );
                             }
                           },

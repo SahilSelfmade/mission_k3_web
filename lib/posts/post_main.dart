@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mission_k3_web/posts/post_edit.dart';
 
 import 'post_detail.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,12 +22,12 @@ class _PostDetailsState extends State<PostDetails> {
   final Stream<QuerySnapshot> ownersStream =
       FirebaseFirestore.instance.collection('home_posts').snapshots();
 
-  Future<void> deleteUser(id) {
+  Future<void> deletePost(id) {
     return owners
         .doc(id)
         .delete()
         .then((value) => Get.snackbar(
-              'User Deleted Successfully',
+              'Post Deleted Successfully',
               '',
               isDismissible: true,
               maxWidth: MediaQuery.of(context).size.width * 0.5,
@@ -37,7 +38,7 @@ class _PostDetailsState extends State<PostDetails> {
               backgroundColor: Colors.white,
             ))
         .catchError((error) => Get.snackbar(
-              'User Deleted Failed',
+              'Post Deleted Failed',
               '$error',
               isDismissible: true,
               maxWidth: MediaQuery.of(context).size.width * 0.5,
@@ -55,12 +56,13 @@ class _PostDetailsState extends State<PostDetails> {
     filedName,
   ) {
     return ListTile(
-      
-      title: Text(
-        ownerDetails[i][filedName].toString(),
-        style: const TextStyle(
-          fontSize: 14,
-          color: Colors.black,
+      title: Center(
+        child: Text(
+          ownerDetails[i][filedName].toString(),
+          style: const TextStyle(
+            fontSize: 14,
+            color: Colors.black,
+          ),
         ),
       ),
       tileColor: Colors.grey[100],
@@ -78,7 +80,7 @@ class _PostDetailsState extends State<PostDetails> {
           fontWeight: FontWeight.bold,
         ),
       ),
-      tileColor: Colors.black,
+      tileColor: Color(0xff21a179),
     );
   }
 
@@ -105,7 +107,7 @@ class _PostDetailsState extends State<PostDetails> {
         }).toList();
 
         return Scaffold(
-          backgroundColor: Colors.black,
+          // backgroundColor: Colors.black,
           body: Container(
             child: Scrollbar(
               scrollbarOrientation: ScrollbarOrientation.bottom,
@@ -118,15 +120,15 @@ class _PostDetailsState extends State<PostDetails> {
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Table(
-                      
                         border: TableBorder.all(
                           color: Colors.grey,
                           style: BorderStyle.solid,
                           width: 2,
                         ),
-                        defaultColumnWidth: const IntrinsicColumnWidth(
-                          flex: 4
-                        ),
+                        defaultColumnWidth: FixedColumnWidth(200.0),
+                        // defaultColumnWidth: const IntrinsicColumnWidth(
+                        //   flex: 4
+                        // ),
                         // columnWidths: const <int, TableColumnWidth>{
                         //   1: FixedColumnWidth(100),
                         // },
@@ -141,21 +143,20 @@ class _PostDetailsState extends State<PostDetails> {
                           for (var i = 0; i < ownerDetails.length; i++) ...[
                             TableRow(
                               children: [
-                                _bodyRowCell(ownerDetails, i, 'desccription'
+                                _bodyRowCell(ownerDetails, i, 'description'
                                     // .length > 7
                                     //     ? '{description.substring(0, 7)}...'
                                     //     : 'description'
                                     ),
                                 _bodyRowCell(ownerDetails, i, 'post_type'),
                                 TableCell(
-
                                   child: Row(
                                     children: [
                                       Expanded(
                                         child: IconButton(
                                           icon: const Icon(
                                             Icons.remove_red_eye,
-                                            color: Colors.white,
+                                            color: Colors.black,
                                           ),
                                           onPressed: () {
                                             Get.to(
@@ -169,11 +170,27 @@ class _PostDetailsState extends State<PostDetails> {
                                       Expanded(
                                         child: IconButton(
                                           icon: const Icon(
-                                            Icons.delete,
-                                            color: Colors.white,
+                                            Icons.edit,
+                                            color: Colors.black,
                                           ),
                                           onPressed: () {
-                                            deleteUser(ownerDetails[i]['id']);
+                                            Get.to(
+                                              () => PostDetailsEditPage(
+                                                  id: ownerDetails[i]['id']),
+                                            );
+                                            print('Update ');
+                                            // print(ownerDetails);
+                                          },
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: IconButton(
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: Colors.black,
+                                          ),
+                                          onPressed: () {
+                                            deletePost(ownerDetails[i]['id']);
                                           },
                                         ),
                                       ),

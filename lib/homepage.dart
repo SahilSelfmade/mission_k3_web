@@ -1,146 +1,152 @@
-// ignore_for_file: avoid_print, avoid_unnecessary_containers
-
+import 'package:easy_sidemenu/easy_sidemenu.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mission_k3_web/Models/content_view.dart';
-import 'package:mission_k3_web/Models/tab_controller_handler.dart';
+import 'package:get/get.dart';
 import 'package:mission_k3_web/posts/post_main.dart';
+import 'package:mission_k3_web/users/user_main.dart';
 import 'package:mission_k3_web/views/audio_upload_view.dart';
 import 'package:mission_k3_web/views/home_upload_view.dart';
-// import 'package:mission_k3_web/widgets/bottom_bar.dart';
-import 'package:mission_k3_web/widgets/custom_tab.dart';
-import 'package:mission_k3_web/widgets/custom_tab_bar.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:mission_k3_web/views/login_view.dart';
 
-import 'users/user_main.dart';
-
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePageView extends StatefulWidget {
+  const HomePageView({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePageView> createState() => _HomePageViewState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
-  late TabController tabController;
-  late ItemScrollController itemScrollController;
-  var scaffoldKey = GlobalKey<ScaffoldState>();
-
-  late double screenHeight;
-  late double screenWidth;
-  late double topPadding;
-  late double bottomPadding;
-  late double sidePadding;
-
-  List<ContentView> contentViews = [
-    ContentView(
-      tab: const CustomTab(title: 'Home'),
-      content: const HomePageView(),
-    ),
-    ContentView(
-      tab: const CustomTab(title: 'Upload'),
-      content: const MemberView(),
-    ),
-    ContentView(
-      tab: const CustomTab(title: 'Users'),
-      content: const UserDetails(),
-    ),
-    ContentView(
-      tab: const CustomTab(title: 'Posts'),
-      content: const PostDetails(),
-    ),
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    tabController = TabController(length: contentViews.length, vsync: this);
-    itemScrollController = ItemScrollController();
-  }
-
+class _HomePageViewState extends State<HomePageView> {
+  PageController page = PageController();
   @override
   Widget build(BuildContext context) {
-    screenWidth = MediaQuery.of(context).size.width;
-    screenHeight = MediaQuery.of(context).size.height;
-    topPadding = screenHeight * 0.07;
-    bottomPadding = screenHeight * 0.03;
-    sidePadding = screenWidth * 0.05;
-
-    print('Width: $screenWidth');
-    print('Height: $screenHeight');
     return Scaffold(
-      backgroundColor: Colors.black,
-      key: scaffoldKey,
-      endDrawer: drawer(),
-      body: Center(
-        child: SizedBox(
-          // width: screenWidth < 1000 ? screenWidth * 0.95 : screenWidth * 0.4,
-          child: Padding(
-            padding: EdgeInsets.only(top: topPadding, bottom: bottomPadding),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+      appBar: AppBar(
+        title: const Text('Mission K3 Admin Panel'),
+        centerTitle: true,
+        backgroundColor: const Color(0xff21a179),
+      ),
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SideMenu(
+            controller: page,
+            onDisplayModeChanged: (mode) {
+              if (kDebugMode) {
+                print(mode);
+              }
+            },
+            style: SideMenuStyle(
+              displayMode: SideMenuDisplayMode.auto,
+              hoverColor: Colors.green[100],
+              selectedColor: const Color(0xff21a179),
+              selectedTitleTextStyle: const TextStyle(color: Colors.white),
+              selectedIconColor: Colors.white,
+              // decoration: BoxDecoration(
+              //   borderRadius: BorderRadius.all(Radius.circular(10)),
+              // ),
+              // backgroundColor: Colors.blueGrey[700]
+            ),
+            title: Column(
               children: [
-                /// Tab Bar
-                SizedBox(
-                  height: screenHeight * 0.05,
-                  width: screenWidth < 1000
-                      ? screenWidth * 0.95
-                      : screenWidth * 0.4,
-                  child: CustomTabBar(
-                      controller: tabController,
-                      tabs: contentViews.map((e) => e.tab).toList()),
-                ),
-
-                /// Tab Bar View
-                SizedBox(
-                  height: screenHeight * 0.8,
-                  child: TabControllerHandler(
-                    tabController: tabController,
-                    child: Center(
-                      child: SizedBox(
-                        width: screenWidth < 1000
-                            ? screenWidth * 0.95
-                            : screenWidth * 0.4,
-                        child: TabBarView(
-                          controller: tabController,
-                          children: contentViews.map((e) => e.content).toList(),
-                        ),
-                      ),
-                    ),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxHeight: 150,
+                    maxWidth: 150,
                   ),
+                  child: Image.asset(
+                    'assets/images/easy_sidemenu.png',
+                  ),
+                ),
+                const Divider(
+                  indent: 8.0,
+                  endIndent: 8.0,
+                ),
+              ],
+            ),
+            footer: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Design & Developed by Technobitz',
+                style: TextStyle(fontSize: 15),
+              ),
+            ),
+            items: [
+              SideMenuItem(
+                priority: 0,
+                title: 'Images/Videos Upload',
+                onTap: () {
+                  page.jumpToPage(0);
+                },
+                icon: const Icon(Icons.home),
+              ),
+              SideMenuItem(
+                priority: 1,
+                title: 'Users',
+                onTap: () {
+                  page.jumpToPage(1);
+                },
+                icon: const Icon(Icons.supervisor_account),
+              ),
+              SideMenuItem(
+                priority: 2,
+                title: 'Posts',
+                onTap: () {
+                  page.jumpToPage(2);
+                },
+                icon: const Icon(Icons.file_copy_rounded),
+              ),
+              SideMenuItem(
+                priority: 3,
+                title: 'Audio Upload',
+                onTap: () {
+                  page.jumpToPage(3);
+                },
+                icon: const Icon(Icons.download),
+              ),
+              SideMenuItem(
+                priority: 4,
+                title: 'Logout',
+                onTap: () async {
+                  // page.jumpToPage(4);
+                  await FirebaseAuth.instance.signOut();
+                  Get.offAll(() => const LoginScreen());
+                },
+                icon: const Icon(Icons.exit_to_app),
+              ),
+            ],
+          ),
+          Expanded(
+            child: PageView(
+              controller: page,
+              children: [
+                Container(
+                  color: Colors.white,
+                  child: const PostUploadView(),
+                ),
+                Container(
+                  color: Colors.white,
+                  child: const Center(
+                    child: UserDetails(),
+                  ),
+                ),
+                Container(
+                  color: Colors.white,
+                  child: const Center(
+                    child: PostDetails(),
+                  ),
+                ),
+                Container(
+                  color: Colors.white,
+                  child: const AudioUploadView(),
+                ),
+                Container(
+                  color: Colors.white,
                 ),
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget drawer() {
-    return SizedBox(
-      // width: screenWidth * 0.5,
-      child: Drawer(
-        child: ListView(
-          children: [Container(height: screenHeight * 0.1)] +
-              contentViews
-                  .map((e) => Container(
-                        child: ListTile(
-                          title: Text(
-                            e.tab.title,
-                            style: Theme.of(context).textTheme.button,
-                          ),
-                          onTap: () {
-                            itemScrollController.scrollTo(
-                                index: contentViews.indexOf(e),
-                                duration: const Duration(milliseconds: 300));
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ))
-                  .toList(),
-        ),
+        ],
       ),
     );
   }

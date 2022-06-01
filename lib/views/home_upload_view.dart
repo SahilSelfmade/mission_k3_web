@@ -2,6 +2,7 @@
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mission_k3_web/Models/theme_selector.dart';
 import '../widgets/text_field_input.dart';
@@ -23,14 +24,14 @@ List<DropdownMenuItem<String>> get postTypeItems {
   return menuItems;
 }
 
-class HomePageView extends StatefulWidget {
-  const HomePageView({Key? key}) : super(key: key);
+class PostUploadView extends StatefulWidget {
+  const PostUploadView({Key? key}) : super(key: key);
 
   @override
-  _HomePageViewState createState() => _HomePageViewState();
+  _PostUploadViewState createState() => _PostUploadViewState();
 }
 
-class _HomePageViewState extends State<HomePageView> {
+class _PostUploadViewState extends State<PostUploadView> {
   late var dataShow;
   late double screenHeight;
   late double screenWidth;
@@ -51,6 +52,7 @@ class _HomePageViewState extends State<HomePageView> {
           TextSpan(
             text: 'Post ',
             style: TextStyle(
+              color: Colors.black,
               fontSize: 34,
             ),
           ),
@@ -63,6 +65,7 @@ class _HomePageViewState extends State<HomePageView> {
           TextSpan(
             text: '!',
             style: TextStyle(
+              color: Colors.black,
               fontSize: 34,
             ),
           ),
@@ -77,7 +80,10 @@ class _HomePageViewState extends State<HomePageView> {
     screenWidth = MediaQuery.of(context).size.width;
 
     return SingleChildScrollView(
-      child: SizedBox(
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 20,
+        ),
         child: Column(
           children: [
             const SizedBox(
@@ -92,6 +98,7 @@ class _HomePageViewState extends State<HomePageView> {
                 'Add Basic Description',
                 style: GoogleFonts.oswald(
                   textStyle: const TextStyle(
+                    color: Colors.black,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
@@ -207,8 +214,11 @@ class _HomePageViewState extends State<HomePageView> {
               height: 24,
             ),
             MaterialButton(
-              minWidth: screenWidth,
-              padding: const EdgeInsets.symmetric(vertical: 20),
+              // minWidth: screenWidth,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 30,
+                vertical: 15,
+              ),
               color: Colors.grey[500],
               onPressed: () async {
                 FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -241,8 +251,11 @@ class _HomePageViewState extends State<HomePageView> {
             ),
             SizedBox(height: screenHeight * 0.01),
             MaterialButton(
-              minWidth: screenWidth,
-              padding: const EdgeInsets.symmetric(vertical: 20),
+              // minWidth: screenWidth,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 30,
+                vertical: 15,
+              ),
               color: const Color(0xff21a179),
               onPressed: () {},
               child: const Text(

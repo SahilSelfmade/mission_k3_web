@@ -24,8 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void loginUser() async {
-    setState(() {
-    });
+    setState(() {});
     String res = await AuthMethods().loginUser(
         email: _emailController.text, password: _passwordController.text);
     if (res == 'success') {
@@ -42,11 +41,10 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: Colors.white,
         );
       });
-      Get.offAll(const HomePage());
+      Get.offAll(const HomePageView());
     } else if (_emailController.text.isEmpty ||
         _passwordController.text.isEmpty) {
-      setState(() {
-      });
+      setState(() {});
       Get.snackbar(
         'Login Failed',
         'All fields are Required.',
@@ -59,8 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
         snackPosition: SnackPosition.BOTTOM,
       );
     } else if (_passwordController.text.length < 6) {
-      setState(() {
-      });
+      setState(() {});
       Get.snackbar(
         'Login Failed',
         'Password Length is too Short.',
@@ -73,8 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
         snackPosition: SnackPosition.BOTTOM,
       );
     } else if (_emailController.text.isEmail != true) {
-      setState(() {
-      });
+      setState(() {});
       Get.snackbar(
         'Login Failed',
         'Please Enter a Valid E-Mail.',
@@ -87,8 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
         snackPosition: SnackPosition.BOTTOM,
       );
     } else {
-      setState(() {
-      });
+      setState(() {});
       Get.snackbar(
         'Login Failed',
         'Wrong Credentials',

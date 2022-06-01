@@ -5,8 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mission_k3_web/homepage.dart';
 
-import 'homepage.dart';
 import 'views/login_view.dart';
 
 void main() async {
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (firebaseUser != null) {
-      firstWidget = const HomePage();
+      firstWidget = const HomePageView();
     } else {
       firstWidget = const LoginScreen();
     }
@@ -88,7 +88,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/home',
-          page: () => const HomePage(),
+          page: () => const HomePageView(),
         ),
       ],
     );

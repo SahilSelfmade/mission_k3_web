@@ -45,6 +45,7 @@ dependencies:
   firebase_storage: ^10.2.9
   file_picker: ^3.0.4
   firebase_auth: ^3.3.9
+  easy_sidemenu: ^0.3.0
 
 dev_dependencies:
   flutter_test:
